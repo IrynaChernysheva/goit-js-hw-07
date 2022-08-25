@@ -4,37 +4,57 @@
 //Открытие модального окна по клику на элементе галереи. Для этого ознакомься с документацией и примерами.
 //Замена значения атрибута src элемента <img> в модальном окне перед открытием. Используй готовую разметку модального окна с изображением из примеров библиотеки basicLightbox.
 
-import { galleryItems } from "./gallery-items.js";
+import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
 console.log(galleryItems);
-const galleryItemsEl = document.querySelector(`.gallery`);
-const galerryEl = image => {
-	return image
-		.map(({ preview, original, description }) => {
-			return `<div class="gallery__item"><a class="gallery__link" href=${original}><img class= "gallery__image" src="${preview}" data-source =${original} alt="${description}"></div>`;
-		})
-		.join("");
+
+const galleryEl = document.querySelector(".gallery");
+
+const galleryItemsEl = (images) => {
+  return images
+    .map(({ preview, original, description }) => {
+        return `<div class="gallery__item">
+      <a class="gallery__link" href=${original}>
+      <img class= "gallery__image"
+      src="${preview}" 
+      data-source =${original} 
+      alt="${description}"/>
+      </a>
+      </div>`;
+    })
+    .join("");
 };
 
-galleryItemsEl.insertAdjacentHTML('beforeend', galerryEl(galleryItems));
-galleryItemsEl.addEventListener(`click`, onGalleryClick);
-function onGalleryClick(even) {
-	even.preventDefault();
-	if (even.target.nodaName !== `IMG`) {
-		return;
-	}
-	// const instance = basicLightbox.create(
-	// 	`<img src="${event.target.dataset.source}" width="800" height="600">`,
 	// );
 	// instance.show();
 
 	// const onKeydownEsc = event => {
 	// 	console.log(event.code);
 	// 	if (event.code === "Escape") {
-	// 		instance.close();
-	// 	}
 	// };
 
 	// window.addEventListener("keydown", onKeydownEsc);
+galleryEl.insertAdjacentHTML("afterbegin", cardImagesMarkup);
+
+galleryEl.addEventListener("click", onGalleryClick);
+
+function onGalleryClick(evn) {
+  evn.preventDefault();
+  if (evn.target.nodeName !== "IMG") {
+    return;
+  }
+  const instance = basicLightbox.create(
+    `<img src="${evn.target.dataset.source}" width="800" height="600">`
+  );
+  instance.show();
+
+  const onKeydownEsc = (evn) => {
+    console.log(evn.code);
+    if (evn.code === "Escape") {
+      instance.close();
+    }
+  };
+
+  window.addEventListener("keydown", onKeydownEsc);
 }
