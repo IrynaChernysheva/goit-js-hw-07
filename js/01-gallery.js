@@ -26,9 +26,7 @@ const galleryItemsEl = images => {
     .join('');
 };
 
-const cardImagesMarkup = galleryItemsEl(galleryItems);
-
-galleryEl.insertAdjacentHTML('afterbegin', cardImagesMarkup);
+galleryEl.insertAdjacentHTML('afterbegin', galleryItemsEl(galleryItems));
 
 galleryEl.addEventListener('click', onGalleryClick);
 
