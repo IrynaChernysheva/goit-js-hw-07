@@ -9,12 +9,12 @@ import { galleryItems } from './gallery-items.js';
 
 console.log(galleryItems);
 
-const galleryEl = document.querySelector(".gallery");
+const galleryEl = document.querySelector('.gallery');
 
-const galleryItemsEl = (images) => {
+const galleryItemsEl = images => {
   return images
     .map(({ preview, original, description }) => {
-        return `<div class="gallery__item">
+      return `<div class="gallery__item">
       <a class="gallery__link" href=${original}>
       <img class= "gallery__image"
       src="${preview}" 
@@ -23,38 +23,31 @@ const galleryItemsEl = (images) => {
       </a>
       </div>`;
     })
-    .join("");
+    .join('');
 };
 
-	// );
-	// instance.show();
+const cardImagesMarkup = galleryItemsEl(galleryItems);
 
-	// const onKeydownEsc = event => {
-	// 	console.log(event.code);
-	// 	if (event.code === "Escape") {
-	// };
+galleryEl.insertAdjacentHTML('afterbegin', cardImagesMarkup);
 
-	// window.addEventListener("keydown", onKeydownEsc);
-galleryEl.insertAdjacentHTML("afterbegin", cardImagesMarkup);
-
-galleryEl.addEventListener("click", onGalleryClick);
+galleryEl.addEventListener('click', onGalleryClick);
 
 function onGalleryClick(evn) {
   evn.preventDefault();
-  if (evn.target.nodeName !== "IMG") {
+  if (evn.target.nodeName !== 'IMG') {
     return;
   }
   const instance = basicLightbox.create(
-    `<img src="${evn.target.dataset.source}" width="800" height="600">`
+    `<img src="${evn.target.dataset.source}" width="800" height="600">`,
   );
   instance.show();
 
-  const onKeydownEsc = (evn) => {
+  const onKeydownEsc = evn => {
     console.log(evn.code);
-    if (evn.code === "Escape") {
+    if (evn.code === 'Escape') {
       instance.close();
     }
   };
 
-  window.addEventListener("keydown", onKeydownEsc);
+  window.addEventListener('keydown', onKeydownEsc);
 }
